@@ -1,12 +1,13 @@
-import { Inter } from "next/font/google"
-import "./globals.css"
+// src/app/layout.js
+import { Inter } from 'next/font/google'
+import './globals.css'
 import { Providers } from './providers'
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: "Team Review - Chia sẻ ý kiến",
-  description: "Nền tảng chia sẻ ý kiến và thảo luận cho team",
+  title: 'Team Review - Thảo luận nhóm',
+  description: 'Nền tảng thảo luận và review cho team',
 }
 
 export default function RootLayout({ children }) {
