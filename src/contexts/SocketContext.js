@@ -1,23 +1,14 @@
-// src/contexts/SocketContext.js
+// src/contexts/SocketContext.js - Cập nhật để hỗ trợ xóa comment
 'use client'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { useSession } from 'next-auth/react'
+import { io } from 'socket.io-client'
 
 const SocketContext = createContext()
 
 export const useSocket = () => {
   const context = useContext(SocketContext)
   if (!context) {
-    // Return default values instead of throwing error
-    return {
-      socket: null,
-      isConnected: false,
-      joinTopic: () => {},
-      leaveTopic: () => {},
-      emitNewComment: () => {},
-      emitUserTyping: () => {},
-      emitUserStoppedTyping: () => {}
-    }
+    throw new Error('useSocket must be used within SocketProvider')
   }
   return context
 }
@@ -25,42 +16,35 @@ export const useSocket = () => {
 export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null)
   const [isConnected, setIsConnected] = useState(false)
-  const { data: session } = useSession()
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && session) {
-      // Dynamic import for client-side only
-      import('socket.io-client').then(({ io }) => {
-        const socketInstance = io(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3000', {
-          transports: ['websocket'],
-          upgrade: true
-        })
+    // Initialize socket connection
+    const socketInstance = io(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3000', {
+      transports: ['websocket', 'polling']
+    })
 
-        socketInstance.on('connect', () => {
-          console.log('Connected to WebSocket server')
-          setIsConnected(true)
-        })
+    socketInstance.on('connect', () => {
+      console.log('Connected to server')
+      setIsConnected(true)
+    })
 
-        socketInstance.on('disconnect', () => {
-          console.log('Disconnected from WebSocket server')
-          setIsConnected(false)
-        })
+    socketInstance.on('disconnect', () => {
+      console.log('Disconnected from server')
+      setIsConnected(false)
+    })
 
-        socketInstance.on('connect_error', (error) => {
-          console.error('Socket connection error:', error)
-          setIsConnected(false)
-        })
+    socketInstance.on('connect_error', (error) => {
+      console.error('Connection error:', error)
+      setIsConnected(false)
+    })
 
-        setSocket(socketInstance)
+    setSocket(socketInstance)
 
-        return () => {
-          socketInstance.close()
-        }
-      }).catch(error => {
-        console.error('Failed to load socket.io-client:', error)
-      })
+    // Cleanup on unmount
+    return () => {
+      socketInstance.disconnect()
     }
-  }, [session])
+  }, [])
 
   const joinTopic = (topicId) => {
     if (socket && isConnected) {
@@ -77,6 +61,12 @@ export const SocketProvider = ({ children }) => {
   const emitNewComment = (topicId, comment) => {
     if (socket && isConnected) {
       socket.emit('new-comment', { topicId, comment })
+    }
+  }
+
+  const emitCommentDeleted = (topicId, commentId) => {
+    if (socket && isConnected) {
+      socket.emit('comment-deleted', { topicId, commentId })
     }
   }
 
@@ -98,6 +88,7 @@ export const SocketProvider = ({ children }) => {
     joinTopic,
     leaveTopic,
     emitNewComment,
+    emitCommentDeleted,
     emitUserTyping,
     emitUserStoppedTyping
   }

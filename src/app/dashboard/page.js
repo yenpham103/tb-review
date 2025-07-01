@@ -1,13 +1,14 @@
-// src/app/dashboard/page.js
+// src/app/dashboard/page.js - Cập nhật để hiển thị thống kê comment đúng
 'use client'
 import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import LoginButton from '@/components/auth/LoginButton'
-import TopicCard from '@/components/topics/TopicCard'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import CreateTopic from '@/components/topics/CreateTopic'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { MessageSquare, TrendingUp, Clock, Users, Sparkles, Activity } from 'lucide-react'
+import LoginButton from '@/components/auth/LoginButton'
+import { MessageSquare, User, Clock, Eye, Sparkles, TrendingUp, Activity } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 export default function DashboardPage() {
@@ -65,9 +66,19 @@ export default function DashboardPage() {
         return null
     }
 
+    // Tính toán thống kê
     const recentTopics = topics.filter(t =>
         new Date(t.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
     ).length
+
+    const totalComments = topics.reduce((total, topic) => total + (topic.commentCount || 0), 0)
+
+    const recentComments = topics.reduce((total, topic) => {
+        const isRecent = new Date(topic.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+        return total + (isRecent ? (topic.commentCount || 0) : 0)
+    }, 0)
+
+    const averageCommentsPerTopic = topics.length > 0 ? Math.round(totalComments / topics.length * 10) / 10 : 0
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
@@ -104,7 +115,7 @@ export default function DashboardPage() {
                     </div>
                 </motion.div>
 
-                {/* Enhanced Stats Cards */}
+                {/* Enhanced Stats Cards với thống kê comment chính xác */}
                 <motion.div
                     className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
                     initial={{ opacity: 0, y: 20 }}
@@ -126,33 +137,35 @@ export default function DashboardPage() {
 
                     <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium opacity-90">Hoạt động</CardTitle>
+                            <CardTitle className="text-sm font-medium opacity-90">Tổng bình luận</CardTitle>
                             <Activity className="h-5 w-5 opacity-80" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-bold">{recentTopics}</div>
-                            <p className="text-xs opacity-80 mt-1">7 ngày qua</p>
+                            <div className="text-3xl font-bold">{totalComments}</div>
+                            <p className="text-xs opacity-80 mt-1">
+                                +{recentComments} tuần này
+                            </p>
                         </CardContent>
                     </Card>
 
                     <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium opacity-90">Thành viên</CardTitle>
-                            <Users className="h-5 w-5 opacity-80" />
+                            <CardTitle className="text-sm font-medium opacity-90">TB bình luận/chủ đề</CardTitle>
+                            <TrendingUp className="h-5 w-5 opacity-80" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-bold">1</div>
-                            <p className="text-xs opacity-80 mt-1">Đang online</p>
+                            <div className="text-3xl font-bold">{averageCommentsPerTopic}</div>
+                            <p className="text-xs opacity-80 mt-1">Mức độ tương tác</p>
                         </CardContent>
                     </Card>
 
-                    <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                    <Card className="bg-gradient-to-br from-orange-500 to-red-500 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium opacity-90">Mới nhất</CardTitle>
+                            <CardTitle className="text-sm font-medium opacity-90">Hoạt động gần đây</CardTitle>
                             <Clock className="h-5 w-5 opacity-80" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-lg font-bold">
+                            <div className="text-2xl font-bold">
                                 {topics.length > 0 ?
                                     new Date(topics[0]?.createdAt).toLocaleDateString('vi-VN') :
                                     'Chưa có'
@@ -177,7 +190,7 @@ export default function DashboardPage() {
                     <CreateTopic onTopicCreated={handleTopicCreated} />
                 </motion.div>
 
-                {/* Enhanced Topics Grid */}
+                {/* Enhanced Topics Grid với hiển thị số comment */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -200,35 +213,76 @@ export default function DashboardPage() {
                             ))}
                         </div>
                     ) : topics.length === 0 ? (
-                        <Card className="bg-white/70 backdrop-blur-sm border-white/20 shadow-xl">
-                            <CardContent className="pt-6">
-                                <div className="text-center py-16">
-                                    <motion.div
-                                        initial={{ scale: 0 }}
-                                        animate={{ scale: 1 }}
-                                        transition={{ duration: 0.5 }}
-                                        className="mb-6"
-                                    >
-                                        <MessageSquare className="h-24 w-24 text-gray-400 mx-auto" />
-                                    </motion.div>
-                                    <h3 className="text-2xl font-bold text-gray-700 mb-4">Chưa có chủ đề nào</h3>
-                                    <p className="text-gray-500 mb-8 text-lg">
-                                        Hãy tạo chủ đề đầu tiên để bắt đầu cuộc thảo luận thú vị
-                                    </p>
-                                    <CreateTopic onTopicCreated={handleTopicCreated} />
-                                </div>
-                            </CardContent>
-                        </Card>
+                        <motion.div
+                            className="text-center py-16"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <div className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
+                                <MessageSquare className="h-12 w-12 text-gray-400" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-gray-700 mb-2">Chưa có chủ đề nào</h3>
+                            <p className="text-gray-500 mb-6">Hãy tạo chủ đề đầu tiên để bắt đầu thảo luận!</p>
+                            <CreateTopic onTopicCreated={handleTopicCreated} />
+                        </motion.div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {topics.map((topic, index) => (
                                 <motion.div
                                     key={topic._id}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                                    whileHover={{ y: -5, scale: 1.02 }}
+                                    className="group"
                                 >
-                                    <TopicCard topic={topic} />
+                                    <Link href={`/topic/${topic._id}`}>
+                                        <Card className="bg-white/70 backdrop-blur-sm border-white/20 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group-hover:border-blue-200/50 h-full">
+                                            <CardHeader className="pb-3">
+                                                <div className="flex items-start justify-between">
+                                                    <CardTitle className="text-lg font-bold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-2">
+                                                        {topic.title}
+                                                    </CardTitle>
+                                                    <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 rounded-full ml-2 flex-shrink-0">
+                                                        <MessageSquare className="h-3 w-3 text-blue-600" />
+                                                        <span className="text-xs font-medium text-blue-600">
+                                                            {topic.commentCount || 0}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <CardDescription className="text-gray-600 line-clamp-3 mt-2">
+                                                    {topic.description}
+                                                </CardDescription>
+                                            </CardHeader>
+                                            <CardContent className="pt-0">
+                                                <div className="flex items-center justify-between text-sm text-gray-500">
+                                                    <div className="flex items-center gap-2">
+                                                        <User className="h-4 w-4" />
+                                                        <span className="font-medium">{topic.authorName}</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2">
+                                                        <Clock className="h-4 w-4" />
+                                                        <span>{new Date(topic.createdAt).toLocaleDateString('vi-VN')}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="mt-3 flex items-center justify-between">
+                                                    <div className="flex items-center gap-4 text-xs text-gray-500">
+                                                        <div className="flex items-center gap-1">
+                                                            <Eye className="h-3 w-3" />
+                                                            <span>Xem chi tiết</span>
+                                                        </div>
+                                                    </div>
+                                                    <Button
+                                                        size="sm"
+                                                        className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all duration-300"
+                                                    >
+                                                        Tham gia
+                                                    </Button>
+                                                </div>
+                                            </CardContent>
+                                        </Card>
+                                    </Link>
                                 </motion.div>
                             ))}
                         </div>

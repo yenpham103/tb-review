@@ -254,7 +254,7 @@ export default function TopicDetailPage({ params }) {
                             <CardContent>
                                 <ul className="text-sm text-blue-700 space-y-2">
                                     <li>• Bình luận được cập nhật real-time</li>
-                                    <li>• Sử dụng chế độ ẩn danh để bảo mật</li>
+                                    <li>• Có thể bình luận ẩn danh</li>
                                     <li>• Chia sẻ ý kiến một cách tôn trọng</li>
                                 </ul>
                             </CardContent>

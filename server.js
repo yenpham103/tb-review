@@ -1,4 +1,4 @@
-// server.js - Tạo file này ở root của project
+// server.js - Cập nhật để hỗ trợ xóa comment realtime
 const { createServer } = require('http')
 const { parse } = require('url')
 const next = require('next')
@@ -28,7 +28,7 @@ app.prepare().then(() => {
     const io = new Server(httpServer, {
         cors: {
             origin: ["http://localhost:3000"],
-            methods: ["GET", "POST"]
+            methods: ["GET", "POST", "DELETE"]
         }
     })
 
@@ -53,6 +53,13 @@ app.prepare().then(() => {
             // Broadcast to all users in the topic room except sender
             socket.to(`topic-${data.topicId}`).emit('comment-added', data.comment)
             console.log('Comment broadcasted to topic:', data.topicId)
+        })
+
+        // Handle comment deletion
+        socket.on('comment-deleted', (data) => {
+            // Broadcast to all users in the topic room except sender
+            socket.to(`topic-${data.topicId}`).emit('comment-deleted', data.commentId)
+            console.log('Comment deletion broadcasted to topic:', data.topicId, 'commentId:', data.commentId)
         })
 
         // Handle user typing
