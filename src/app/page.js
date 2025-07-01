@@ -107,19 +107,6 @@ export default function HomePage() {
             </CardContent>
           </Card>
         </div>
-
-        {/* CTA */}
-        <div className="text-center">
-          <Card className="max-w-md mx-auto border-none shadow-lg">
-            <CardContent className="pt-6">
-              <h3 className="text-2xl font-bold mb-4">Bắt đầu ngay</h3>
-              <p className="text-muted-foreground mb-6">
-                Đăng nhập với Google để tham gia thảo luận
-              </p>
-              <LoginButton />
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </div>
   )

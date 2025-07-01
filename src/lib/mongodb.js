@@ -1,3 +1,4 @@
+// src/lib/mongodb.js - Cấu hình cho MongoDB Atlas
 import mongoose from 'mongoose'
 
 const MONGODB_URI = process.env.MONGODB_URI
@@ -20,10 +21,23 @@ async function dbConnect() {
     if (!cached.promise) {
         const opts = {
             bufferCommands: false,
+            // Cấu hình cho MongoDB Atlas
+            ssl: true, // Bật SSL cho Atlas
+            tls: true,
+            tlsAllowInvalidCertificates: false,
+            serverSelectionTimeoutMS: 10000,
+            connectTimeoutMS: 10000,
+            maxPoolSize: 10,
+            retryWrites: true,
+            w: 'majority',
         }
 
         cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+            console.log('Connected to MongoDB Atlas successfully')
             return mongoose
+        }).catch((error) => {
+            console.error('MongoDB Atlas connection error:', error)
+            throw error
         })
     }
 
@@ -31,6 +45,7 @@ async function dbConnect() {
         cached.conn = await cached.promise
     } catch (e) {
         cached.promise = null
+        console.error('Failed to connect to MongoDB Atlas:', e)
         throw e
     }
 
