@@ -45,6 +45,12 @@ export const authOptions = {
         }),
     ],
     callbacks: {
+        async signIn({ user }) {
+            if (user.email && user.email.endsWith('@bsscommerce.com')) {
+                return true
+            }
+            return false
+        },
         session: async ({ session, user }) => {
             if (session?.user) {
                 session.user.id = user.id
@@ -57,6 +63,7 @@ export const authOptions = {
     },
     pages: {
         signIn: '/',
+        error: '/auth/error',
     },
     secret: process.env.NEXTAUTH_SECRET,
     debug: process.env.NODE_ENV === 'development',

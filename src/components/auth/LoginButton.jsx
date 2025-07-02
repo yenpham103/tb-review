@@ -33,12 +33,17 @@ export default function LoginButton() {
     }
 
     return (
-        <Button
-            onClick={() => signIn('google')}
-            className="flex items-center gap-2"
-        >
-            <LogIn className="h-4 w-4" />
-            Đăng nhập với Google
-        </Button>
+        <div className="text-center">
+            <Button
+                onClick={() => signIn('google')}
+                className="flex items-center gap-2 mb-2"
+            >
+                <LogIn className="h-4 w-4" />
+                Đăng nhập với Google
+            </Button>
+            <p className="text-xs text-gray-500">
+                Chỉ email @bsscommerce.com được phép truy cập
+            </p>
+        </div>
     )
 }
