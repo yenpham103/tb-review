@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export const authOptions = {
-    // adapter: MongoDBAdapter(clientPromise),
+    adapter: MongoDBAdapter(clientPromise),
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
