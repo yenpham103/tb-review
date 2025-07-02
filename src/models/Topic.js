@@ -10,7 +10,11 @@ const topicSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    createdBy: {
+    authorId: {      
+        type: String,
+        required: true
+    },
+    authorName: {
         type: String,
         required: true
     },

@@ -145,6 +145,7 @@ export default function RealtimeCommentForm({ topicId, onCommentAdded }) {
                             id="anonymous"
                             checked={isAnonymous}
                             onCheckedChange={setIsAnonymous}
+                            className="cursor-pointer"
                         />
                         <Label htmlFor="anonymous" className="text-sm">
                             Bình luận ẩn danh

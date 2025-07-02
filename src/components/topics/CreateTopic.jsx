@@ -58,29 +58,29 @@ export default function CreateTopic({ onTopicCreated }) {
             <DialogTrigger asChild>
                 <Button className="flex items-center gap-2">
                     <Plus className="h-4 w-4" />
-                    Tạo chủ đề mới
+                    Create Topic
                 </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Tạo chủ đề mới</DialogTitle>
+                    <DialogTitle>Create Topic</DialogTitle>
                     <DialogDescription>
-                        Tạo một chủ đề mới để mọi người có thể thảo luận
+                        Tạo một chủ đề mới để mọi người có thể nấu sói
                     </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <Label htmlFor="title">Tiêu đề</Label>
+                        <Label htmlFor="title">Title</Label>
                         <Input
                             id="title"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            placeholder="Nhập tiêu đề chủ đề..."
+                            placeholder="Nhập tiêu đề..."
                             required
                         />
                     </div>
                     <div>
-                        <Label htmlFor="description">Mô tả</Label>
+                        <Label htmlFor="description">Description</Label>
                         <Textarea
                             id="description"
                             value={description}

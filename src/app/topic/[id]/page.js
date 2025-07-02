@@ -98,21 +98,12 @@ export default function TopicDetailPage({ params }) {
                     transition={{ duration: 0.6 }}
                 >
                     <div className="flex items-center gap-4">
-                        <Link href="/dashboard">
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                className="bg-white/70 backdrop-blur-sm border-white/30 hover:bg-white/90 transition-all duration-300"
-                            >
-                                <ArrowLeft className="h-4 w-4 mr-2" />
-                                Quay lại
-                            </Button>
-                        </Link>
+  
                         <div>
                             <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                                Chi tiết chủ đề
+                                Var Vấp Thoải Mái : D
                             </h1>
-                            <p className="text-gray-600 mt-1">Thảo luận và chia sẻ ý kiến</p>
+                            <p className="text-gray-600 mt-1">Nấu sói cực căng</p>
                         </div>
                     </div>
                     <LoginButton />
@@ -218,14 +209,15 @@ export default function TopicDetailPage({ params }) {
                                 <CardTitle className="text-lg">Thao tác nhanh</CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-3">
-                                <Button
-                                    variant="outline"
-                                    className="w-full bg-white/50 border-white/30 hover:bg-white/80 transition-all duration-200"
-                                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                                >
-                                    <ArrowLeft className="h-4 w-4 mr-2 rotate-90" />
-                                    Lên đầu trang
-                                </Button>
+                                <Link href="/dashboard" className="block">
+                                    <Button
+                                        variant="outline"
+                                        className="w-full bg-white/50 border-white/30 hover:bg-white/80 transition-all duration-200"
+                                    >
+                                        <ArrowLeft className="h-4 w-4 mr-2" />
+                                        Backto Dashboard
+                                    </Button>
+                                </Link>
                                 <Link href="/dashboard" className="block">
                                     <Button variant="outline" className="w-full bg-white/50 border-white/30 hover:bg-white/80 transition-all duration-200">
                                         <MessageSquare className="h-4 w-4 mr-2" />

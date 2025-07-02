@@ -3,13 +3,10 @@ import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import LoginButton from '@/components/auth/LoginButton'
-import TopicCard from '@/components/topics/TopicCard'
-import CreateTopic from '@/components/topics/CreateTopic'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { MessageSquare, Users, TrendingUp } from 'lucide-react'
 
 export default function HomePage() {
-  const [topics, setTopics] = useState([])
   const [loading, setLoading] = useState(true)
   const { data: session, status } = useSession()
   const router = useRouter()
@@ -37,11 +34,10 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
         <div className="flex justify-between items-center mb-12">
           <div>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Team Review
+              Team B Review
             </h1>
             <p className="text-muted-foreground mt-2">
               Nền tảng chia sẻ ý kiến và thảo luận cho team
@@ -50,7 +46,6 @@ export default function HomePage() {
           <LoginButton />
         </div>
 
-        {/* Hero Section */}
         <div className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-6">
             Chia sẻ ý kiến,{' '}
@@ -63,7 +58,6 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* Features */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           <Card className="text-center border-none shadow-lg">
             <CardHeader>
@@ -88,7 +82,7 @@ export default function HomePage() {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">
-                Cho phép bình luận ẩn danh để tạo không gian an toàn cho mọi ý kiến
+                Cho phép bình luận ẩn danh để nấu sói thoải mái
               </p>
             </CardContent>
           </Card>

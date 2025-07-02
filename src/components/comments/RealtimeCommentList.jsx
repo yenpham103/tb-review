@@ -190,7 +190,6 @@ export default function RealtimeCommentList({ topicId, newComment, onCommentCoun
     return (
         <>
             <div className="space-y-4">
-                {/* Typing Indicators */}
                 <AnimatePresence>
                     {typingUsers.map((user) => (
                         <motion.div
@@ -226,7 +225,6 @@ export default function RealtimeCommentList({ topicId, newComment, onCommentCoun
                     ))}
                 </AnimatePresence>
 
-                {/* Comments */}
                 <AnimatePresence>
                     {comments.map((comment, index) => (
                         <motion.div
@@ -282,7 +280,6 @@ export default function RealtimeCommentList({ topicId, newComment, onCommentCoun
                                             </div>
                                         </div>
                                         
-                                        {/* Delete button - chỉ hiện cho comment của mình */}
                                         {session && comment.authorId === session.user.id && (
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>
@@ -309,7 +306,6 @@ export default function RealtimeCommentList({ topicId, newComment, onCommentCoun
                 </AnimatePresence>
             </div>
 
-            {/* Delete Confirmation Dialog */}
             <AlertDialog open={!!deleteCommentId} onOpenChange={() => setDeleteCommentId(null)}>
                 <AlertDialogContent>
                     <AlertDialogHeader>

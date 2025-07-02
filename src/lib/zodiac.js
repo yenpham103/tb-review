@@ -1,7 +1,7 @@
 export const zodiacAnimals = [
-    'Tý (Chuột)', 'Sửu (Trâu)', 'Dần (Hổ)', 'Mão (Mèo)',
-    'Thìn (Rồng)', 'Tỵ (Rắn)', 'Ngọ (Ngựa)', 'Mùi (Dê)',
-    'Thân (Khỉ)', 'Dậu (Gà)', 'Tuất (Chó)', 'Hợi (Heo)'
+    'Chuột Ẩn Danh', 'Trâu Ẩn Danh', 'Hổ Ẩn Danh', 'Mèo Ẩn Danh',
+    'Rồng Ẩn Danh', 'Rắn Ẩn Danh', 'Ngựa Ẩn Danh', 'Dê Ẩn Danh',
+    'Khỉ Ẩn Danh', 'Gà Ẩn Danh', 'Chó Ẩn Danh', 'Heo Ẩn Danh'
 ]
 
 export function getRandomZodiac() {

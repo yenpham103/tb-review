@@ -55,7 +55,7 @@ export default function DashboardPage() {
                         <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-200"></div>
                         <div className="animate-spin rounded-full h-16 w-16 border-4 border-t-blue-600 absolute top-0"></div>
                     </div>
-                    <p className="text-lg font-medium text-gray-600">Đang tải dashboard...</p>
+                    <p className="text-lg font-medium text-gray-600">Loading...</p>
                 </motion.div>
             </div>
         )
@@ -95,11 +95,11 @@ export default function DashboardPage() {
                 >
                     <div className="space-y-2">
                         <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                            Team Review
+                            Team B Review
                         </h1>
                         <p className="text-xl text-gray-600 flex items-center gap-2">
                             <Sparkles className="h-5 w-5 text-yellow-500" />
-                            Chào mừng {session.user?.name} đến với không gian thảo luận
+                            Chào mừng {session.user?.name} đến với không gian nấu sói.
                         </p>
                     </div>
                     <div className="flex items-center gap-4">
@@ -178,8 +178,8 @@ export default function DashboardPage() {
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
                     <div>
-                        <h2 className="text-3xl font-bold text-gray-800 mb-2">Chủ đề thảo luận</h2>
-                        <p className="text-gray-600">Khám phá và tham gia các cuộc thảo luận sôi nổi</p>
+                        <h2 className="text-3xl font-bold text-gray-800 mb-2">Chủ đề nấu sói</h2>
+                        <p className="text-gray-600">Khám phá và tham gia các cuộc nấu sói cực căng</p>
                     </div>
                     <CreateTopic onTopicCreated={handleTopicCreated} />
                 </motion.div>
