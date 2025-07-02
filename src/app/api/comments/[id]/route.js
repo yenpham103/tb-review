@@ -1,4 +1,3 @@
-// src/app/api/comments/[id]/route.js - API để xóa comment
 import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import dbConnect from '@/lib/mongodb'
@@ -15,19 +14,16 @@ export async function DELETE(request, { params }) {
 
         await dbConnect()
 
-        // Tìm comment
         const comment = await Comment.findById(params.id)
 
         if (!comment) {
             return NextResponse.json({ error: 'Comment not found' }, { status: 404 })
         }
 
-        // Chỉ cho phép xóa comment của chính mình
         if (comment.authorId !== session.user.id) {
             return NextResponse.json({ error: 'Forbidden - You can only delete your own comments' }, { status: 403 })
         }
 
-        // Xóa comment
         await Comment.findByIdAndDelete(params.id)
 
         return NextResponse.json({ message: 'Comment deleted successfully' })

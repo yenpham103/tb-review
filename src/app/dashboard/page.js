@@ -1,4 +1,3 @@
-// src/app/dashboard/page.js - Cập nhật để hiển thị thống kê comment đúng
 'use client'
 import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
@@ -66,7 +65,6 @@ export default function DashboardPage() {
         return null
     }
 
-    // Tính toán thống kê
     const recentTopics = topics.filter(t =>
         new Date(t.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
     ).length
@@ -82,7 +80,6 @@ export default function DashboardPage() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-            {/* Animated Background Elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-10 left-10 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
                 <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -90,7 +87,6 @@ export default function DashboardPage() {
             </div>
 
             <div className="relative container mx-auto px-4 py-8">
-                {/* Enhanced Header */}
                 <motion.div
                     className="flex justify-between items-center mb-12"
                     initial={{ opacity: 0, y: -20 }}
@@ -115,7 +111,6 @@ export default function DashboardPage() {
                     </div>
                 </motion.div>
 
-                {/* Enhanced Stats Cards với thống kê comment chính xác */}
                 <motion.div
                     className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
                     initial={{ opacity: 0, y: 20 }}
@@ -176,7 +171,6 @@ export default function DashboardPage() {
                     </Card>
                 </motion.div>
 
-                {/* Enhanced Action Bar */}
                 <motion.div
                     className="flex justify-between items-center mb-8"
                     initial={{ opacity: 0, x: -20 }}
@@ -190,7 +184,6 @@ export default function DashboardPage() {
                     <CreateTopic onTopicCreated={handleTopicCreated} />
                 </motion.div>
 
-                {/* Enhanced Topics Grid với hiển thị số comment */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

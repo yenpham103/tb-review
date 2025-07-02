@@ -1,4 +1,3 @@
-// src/components/auth/LoginButton.jsx
 'use client'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/button'

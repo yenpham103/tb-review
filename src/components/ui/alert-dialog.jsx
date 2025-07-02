@@ -1,4 +1,3 @@
-// src/components/ui/alert-dialog.jsx
 "use client"
 
 import * as React from "react"

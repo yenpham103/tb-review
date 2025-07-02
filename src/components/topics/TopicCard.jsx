@@ -1,5 +1,4 @@
 
-// src/components/topics/TopicCard.jsx
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { MessageCircle, Calendar } from 'lucide-react'

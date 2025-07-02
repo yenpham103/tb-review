@@ -1,5 +1,4 @@
 
-// src/components/topics/CreateTopic.jsx
 'use client'
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'

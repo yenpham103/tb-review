@@ -1,4 +1,3 @@
-// src/app/topic/[id]/page.js
 'use client'
 import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
@@ -85,7 +84,6 @@ export default function TopicDetailPage({ params }) {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-            {/* Animated Background Elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-10 left-10 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
                 <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -93,7 +91,6 @@ export default function TopicDetailPage({ params }) {
             </div>
 
             <div className="relative container mx-auto px-4 py-8">
-                {/* Enhanced Header */}
                 <motion.div
                     className="flex justify-between items-center mb-8"
                     initial={{ opacity: 0, y: -20 }}
@@ -122,14 +119,12 @@ export default function TopicDetailPage({ params }) {
                 </motion.div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                    {/* Main Content */}
                     <motion.div
                         className="lg:col-span-3 space-y-8"
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
                     >
-                        {/* Topic Card */}
                         <Card className="bg-white/70 backdrop-blur-sm border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300">
                             <CardHeader className="bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-indigo-600/10 rounded-t-lg">
                                 <CardTitle className="text-2xl font-bold text-gray-800">
@@ -159,13 +154,11 @@ export default function TopicDetailPage({ params }) {
                             </CardContent>
                         </Card>
 
-                        {/* Comment Form */}
                         <RealtimeCommentForm
                             topicId={topic._id}
                             onCommentAdded={handleCommentAdded}
                         />
 
-                        {/* Comments List */}
                         <div>
                             <div className="flex items-center gap-3 mb-6">
                                 <h3 className="text-2xl font-bold text-gray-800">Bình luận</h3>
@@ -181,14 +174,12 @@ export default function TopicDetailPage({ params }) {
                         </div>
                     </motion.div>
 
-                    {/* Enhanced Sidebar */}
                     <motion.div
                         className="space-y-6"
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        {/* Topic Info */}
                         <Card className="bg-white/70 backdrop-blur-sm border-white/20 shadow-lg hover:shadow-xl transition-all duration-300">
                             <CardHeader>
                                 <CardTitle className="text-lg flex items-center gap-2">
@@ -222,8 +213,6 @@ export default function TopicDetailPage({ params }) {
                                 </div>
                             </CardContent>
                         </Card>
-
-                        {/* Quick Actions */}
                         <Card className="bg-white/70 backdrop-blur-sm border-white/20 shadow-lg hover:shadow-xl transition-all duration-300">
                             <CardHeader>
                                 <CardTitle className="text-lg">Thao tác nhanh</CardTitle>
@@ -246,7 +235,6 @@ export default function TopicDetailPage({ params }) {
                             </CardContent>
                         </Card>
 
-                        {/* Tips */}
                         <Card className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-sm border-blue-200/30 shadow-lg">
                             <CardHeader>
                                 <CardTitle className="text-lg text-blue-800">💡 Mẹo nhỏ</CardTitle>

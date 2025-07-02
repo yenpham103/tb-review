@@ -1,4 +1,3 @@
-// src/contexts/SocketContext.js - Cập nhật để hỗ trợ xóa comment
 'use client'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
@@ -18,7 +17,6 @@ export const SocketProvider = ({ children }) => {
   const [isConnected, setIsConnected] = useState(false)
 
   useEffect(() => {
-    // Initialize socket connection
     const socketInstance = io(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3000', {
       transports: ['websocket', 'polling']
     })
@@ -40,7 +38,6 @@ export const SocketProvider = ({ children }) => {
 
     setSocket(socketInstance)
 
-    // Cleanup on unmount
     return () => {
       socketInstance.disconnect()
     }

@@ -1,4 +1,3 @@
-// src/lib/mongodb.js - Cấu hình cho MongoDB Atlas
 import mongoose from 'mongoose'
 
 const MONGODB_URI = process.env.MONGODB_URI
@@ -21,8 +20,7 @@ async function dbConnect() {
     if (!cached.promise) {
         const opts = {
             bufferCommands: false,
-            // Cấu hình cho MongoDB Atlas
-            ssl: true, // Bật SSL cho Atlas
+            ssl: true, 
             tls: true,
             tlsAllowInvalidCertificates: false,
             serverSelectionTimeoutMS: 10000,

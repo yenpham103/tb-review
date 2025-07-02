@@ -1,4 +1,3 @@
-// src/components/comments/RealtimeCommentList.jsx - Cập nhật với delete function
 'use client'
 import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
@@ -53,12 +52,10 @@ export default function RealtimeCommentList({ topicId, newComment, onCommentCoun
     useEffect(() => {
         if (newComment) {
             setComments(prev => [newComment, ...prev])
-            // Thông báo comment count thay đổi
             onCommentCountChange?.(prev => prev + 1)
         }
     }, [newComment, onCommentCountChange])
 
-    // Socket event listeners
     useEffect(() => {
         if (!socket) return
 
@@ -123,11 +120,9 @@ export default function RealtimeCommentList({ topicId, newComment, onCommentCoun
             })
 
             if (response.ok) {
-                // Xóa khỏi state local
                 setComments(prev => prev.filter(comment => comment._id !== deleteCommentId))
                 onCommentCountChange?.(prev => prev - 1)
                 
-                // Emit delete event qua WebSocket
                 if (socket && isConnected) {
                     socket.emit('comment-deleted', { topicId, commentId: deleteCommentId })
                 }

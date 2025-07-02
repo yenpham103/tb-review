@@ -1,4 +1,3 @@
-// src/components/comments/RealtimeCommentForm.jsx
 'use client'
 import { useState, useRef, useCallback } from 'react'
 import { useSession } from 'next-auth/react'
@@ -25,18 +24,15 @@ export default function RealtimeCommentForm({ topicId, onCommentAdded }) {
 
         if (!isConnected || !session) return
 
-        // Start typing indicator
         if (!isTypingRef.current && value.trim()) {
             isTypingRef.current = true
             emitUserTyping(topicId, session.user.id, session.user.name, isAnonymous)
         }
 
-        // Clear previous timeout
         if (typingTimeoutRef.current) {
             clearTimeout(typingTimeoutRef.current)
         }
 
-        // Stop typing after 2 seconds of inactivity
         typingTimeoutRef.current = setTimeout(() => {
             if (isTypingRef.current) {
                 isTypingRef.current = false
@@ -49,7 +45,6 @@ export default function RealtimeCommentForm({ topicId, onCommentAdded }) {
         e.preventDefault()
         if (!content.trim()) return
 
-        // Stop typing indicator
         if (isTypingRef.current) {
             isTypingRef.current = false
             emitUserStoppedTyping(topicId, session.user.id)
@@ -72,10 +67,8 @@ export default function RealtimeCommentForm({ topicId, onCommentAdded }) {
             if (response.ok) {
                 const newComment = await response.json()
 
-                // Add comment locally
                 onCommentAdded?.(newComment)
 
-                // Emit to other users via WebSocket
                 if (isConnected) {
                     emitNewComment(topicId, newComment)
                 }
