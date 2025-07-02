@@ -217,7 +217,6 @@ export default function DashboardPage() {
                             </div>
                             <h3 className="text-2xl font-bold text-gray-700 mb-2">Chưa có chủ đề nào</h3>
                             <p className="text-gray-500 mb-6">Hãy tạo chủ đề đầu tiên để bắt đầu thảo luận!</p>
-                            <CreateTopic onTopicCreated={handleTopicCreated} />
                         </motion.div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
